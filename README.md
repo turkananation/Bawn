@@ -1,8 +1,3 @@
-I apologize for that. You are absolutely right—I aggressively summarized the "Developer Notes" and "Roadmap" sections, which contained critical technical context about the flicker trade-off and biometric implementation.
-
-Here is the **complete** `README.md`, restoring all original sections while integrating our new PIN management features.
-
-````markdown
 # 🛡️ Bawn - The Digital Fortress
 
 **Bawn** is a high-performance, minimalist App Locker for Android, built with modern security protocols and Jetpack Compose. It serves as a secure overlay "fortress," intercepting unauthorized access to your selected applications with biometric or PIN verification.
@@ -42,16 +37,16 @@ Bawn is built using **Clean Architecture** principles and the **MVVM (Model-View
 
 ### 🏗️ Core Components
 
-1.  **`BawnAccessibilityService` (The Watchman):**
+1. **`BawnAccessibilityService` (The Watchman):**
     * The heart of the app. It listens for `TYPE_WINDOW_STATE_CHANGED` events.
     * Checks the foreground package against the `LockedAppDao`.
     * Triggers the `LockScreenActivity` if a match is found and no active session exists.
 
-2.  **`BawnApplication` (The Overseer):**
+2. **`BawnApplication` (The Overseer):**
     * Manages app-wide lifecycle events.
     * Enforces a "Self-Lock" mechanism: If the user leaves Bawn for more than 30 seconds, they must re-authenticate.
 
-3.  **`LockScreenActivity` (The Shield):**
+3. **`LockScreenActivity` (The Shield):**
     * A specialized `FragmentActivity` (required for Biometrics).
     * Configured with `launchMode="singleInstance"` and `taskAffinity=""` to detach it from the main app stack for speed.
     * Disables screenshotting via `FLAG_SECURE`.
@@ -66,20 +61,20 @@ Bawn is built using **Clean Architecture** principles and the **MVVM (Model-View
 * Target SDK: 36 (Android 16)
 
 ### First Run Experience
-1.  **Install & Open:** Upon first launch, Bawn detects that no PIN is set.
-2.  **Auto-Routing:** You are immediately redirected to the **Set PIN** screen.
-3.  **Setup:** Create and confirm a 4-digit PIN.
-4.  **Dashboard:** Once secured, the app allows access to the main dashboard.
+1. **Install & Open:** Upon first launch, Bawn detects that no PIN is set.
+2. **Auto-Routing:** You are immediately redirected to the **Set PIN** screen.
+3. **Setup:** Create and confirm a 4-digit PIN.
+4. **Dashboard:** Once secured, the app allows access to the main dashboard.
 
 ### ⚠️ Important Note for Testing (Restricted Settings)
 If you install the app via **USB Debugging (Android Studio)**, Android considers it a "Test" installation and **will not** trigger the "Restricted Setting" block.
 
 **To test the Sideload Protection flow:**
-1.  Generate a Signed Release APK (`Build > Generate Signed Bundle / APK`).
-2.  Uninstall the debug version from your phone.
-3.  Transfer the `app-release.apk` to your phone.
-4.  Install it manually via your File Manager.
-5.  You will now see the Red "Restricted" card in the app.
+1. Generate a Signed Release APK (`Build > Generate Signed Bundle / APK`).
+2. Uninstall the debug version from your phone.
+3. Transfer the `app-release.apk` to your phone.
+4. Install it manually via your File Manager.
+5. You will now see the Red "Restricted" card in the app.
 
 ---
 
@@ -92,8 +87,8 @@ Accessibility Services are **reactive**. The OS launches the target app *first*,
 
 ### Adaptive Icons
 The app uses two different image assets:
-1.  **Launcher Icon:** An Adaptive Icon (`mipmap/ic_launcher`) complying with Android standards (background + foreground layers).
-2.  **In-App Logo:** A standalone PNG (`drawable/logo_bawn_gold.png`) used in the Compose UI, as `painterResource` cannot render adaptive XML icons directly.
+1. **Launcher Icon:** An Adaptive Icon (`mipmap/ic_launcher`) complying with Android standards (background + foreground layers).
+2. **In-App Logo:** A standalone PNG (`drawable/logo_bawn_gold.png`) used in the Compose UI, as `painterResource` cannot render adaptive XML icons directly.
 
 ### Biometric Implementation
 **Crucial:** The `LockScreenActivity` must inherit from `FragmentActivity`, not `ComponentActivity`. The `androidx.biometric` library relies on `Fragment` support managers to display the system-level fingerprint dialog.
@@ -124,9 +119,9 @@ app/src/main/java/app/bawn
 └── util/                  # Utilities
     ├── RestrictionHelper.kt # Logic for Android 13+ restrictions
     └── SecurityUtils.kt     # PIN hashing and validation logic
-````
+```
 
------
+---
 
 ## 🔮 Future Roadmap
 
@@ -195,7 +190,7 @@ app/src/main/java/app/bawn
 * [ ] **Behavioral Analysis:** Detect unusual unlock patterns and trigger extra verification
 * [ ] **Duress PIN:** Special PIN that appears to unlock but secretly alerts trusted contacts
 
------
+---
 
 ## 📄 License
 
@@ -208,6 +203,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-```
-```
