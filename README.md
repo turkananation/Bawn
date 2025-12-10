@@ -98,27 +98,35 @@ The app uses two different image assets:
 ## 📂 Project Structure
 
 ```text
-app/src/main/java/app/bawn
-├── data/                  # Database Layer
-│   ├── AppDatabase.kt     # Room Database instance
-│   ├── LockedAppDao.kt    # Data Access Object
-│   ├── LockedAppEntity.kt # Database Table Schema
-│   ├── UserSecurityDao.kt # DAO for PIN/Auth data
-│   └── UserSecurityEntity.kt # Schema for PIN hash
-├── service/               # Background Services
-│   ├── BawnAccessibilityService.kt # The core event listener
-│   └── SessionManager.kt           # Manages unlock states
-├── ui/                    # UI Layer (Compose)
-│   ├── theme/             # Bawn Theme (Colors, Type)
-│   ├── AppListViewModel.kt # State management for main list
-│   ├── LockScreenActivity.kt # The actual PIN/Bio lock screen
-│   ├── LockScreenContent.kt  # Reusable Lock UI components
-│   ├── MainActivity.kt    # The Dashboard / Config screen
-│   ├── SetPinActivity.kt  # Initial PIN setup flow
-│   └── RestrictedHelpDialog.kt # Android 13+ help UI
-└── util/                  # Utilities
-    ├── RestrictionHelper.kt # Logic for Android 13+ restrictions
-    └── SecurityUtils.kt     # PIN hashing and validation logic
+app/src/main/java/app/bawn/
+│
+├── 📊 data/
+│   ├── AppDatabase.kt           → Room Database instance
+│   ├── LockedAppDao.kt          → Data Access Object for locked apps
+│   ├── LockedAppEntity.kt       → Database table schema
+│   ├── UserSecurityDao.kt       → DAO for PIN/Auth data
+│   └── UserSecurityEntity.kt    → Schema for PIN hash storage
+│
+├── ⚙️ service/
+│   ├── BawnAccessibilityService.kt  → Core event listener (The Watchman)
+│   └── SessionManager.kt            → Unlock state management
+│
+├── 🎨 ui/
+│   ├── theme/
+│   │   ├── Color.kt             → Basalt Grey & Neon Moss palette
+│   │   ├── Theme.kt             → Material3 theme configuration
+│   │   └── Type.kt              → Typography definitions
+│   │
+│   ├── AppListViewModel.kt      → State management for app list
+│   ├── LockScreenActivity.kt    → PIN/Biometric lock screen
+│   ├── LockScreenContent.kt     → Reusable lock UI components
+│   ├── MainActivity.kt          → Dashboard & configuration
+│   ├── SetPinActivity.kt        → Initial PIN setup flow
+│   └── RestrictedHelpDialog.kt  → Android 13+ permission guide
+│
+└── 🛠️ util/
+    ├── RestrictionHelper.kt     → Android 13+ restriction detection
+    └── SecurityUtils.kt         → PIN hashing & validation (SHA-256)
 ```
 
 ---
