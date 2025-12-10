@@ -1,9 +1,9 @@
 package app.bawn.service
 
 import android.accessibilityservice.AccessibilityService
-import android.content.Intent
 import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.content.IntentFilter
 import android.view.accessibility.AccessibilityEvent
 import app.bawn.data.AppDatabase

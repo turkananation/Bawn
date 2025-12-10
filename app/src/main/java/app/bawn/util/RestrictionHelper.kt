@@ -1,9 +1,7 @@
 package app.bawn.util
 
 import android.accessibilityservice.AccessibilityServiceInfo
-import android.content.ComponentName
 import android.content.Context
-import android.content.pm.InstallSourceInfo
 import android.os.Build
 import android.view.accessibility.AccessibilityManager
 import app.bawn.service.BawnAccessibilityService
@@ -13,7 +11,8 @@ object RestrictionHelper {
     // 1. Check if the Service is currently ON
     fun isServiceEnabled(context: Context): Boolean {
         val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        val enabledServices = am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
+        val enabledServices =
+            am.getEnabledAccessibilityServiceList(AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
 
         return enabledServices.any { service ->
             service.resolveInfo.serviceInfo.packageName == context.packageName &&

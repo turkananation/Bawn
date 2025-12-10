@@ -3,14 +3,17 @@ package app.bawn.ui
 import android.app.Application
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import app.bawn.BawnApplication
 import app.bawn.data.LockedAppEntity
 import app.bawn.util.RestrictionHelper
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 // 1. Define the 3 States
@@ -90,7 +93,8 @@ class AppListViewModel(application: Application) : AndroidViewModel(application)
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val app = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as BawnApplication)
+                val app =
+                    (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as BawnApplication)
                 AppListViewModel(app)
             }
         }

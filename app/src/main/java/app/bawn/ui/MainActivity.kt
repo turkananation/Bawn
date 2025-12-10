@@ -6,18 +6,45 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -89,7 +116,9 @@ fun MainScreen(viewModel: AppListViewModel = viewModel(factory = AppListViewMode
                     intent.putExtra("TARGET_PACKAGE", "app.bawn")
                     context.startActivity(intent)
                 },
-                modifier = Modifier.fillMaxWidth().padding(16.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color.DarkGray)
             ) {
                 Icon(Icons.Default.Lock, contentDescription = null, modifier = Modifier.size(18.dp))
@@ -98,11 +127,15 @@ fun MainScreen(viewModel: AppListViewModel = viewModel(factory = AppListViewMode
             }
         }
     ) { padding ->
-        Column(modifier = Modifier.padding(padding).fillMaxSize()) {
+        Column(modifier = Modifier
+            .padding(padding)
+            .fillMaxSize()) {
 
             // Header with Custom Logo
             Row(
-                modifier = Modifier.fillMaxWidth().padding(24.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(24.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
@@ -122,13 +155,19 @@ fun MainScreen(viewModel: AppListViewModel = viewModel(factory = AppListViewMode
                     when (permissionState) {
                         PermissionState.Restricted -> showRestrictedDialog = true
                         PermissionState.Inactive -> context.startActivity(Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS))
-                        PermissionState.Active -> { /* Do Nothing */ }
+                        PermissionState.Active -> { /* Do Nothing */
+                        }
                     }
                 }
             )
 
             Spacer(modifier = Modifier.height(24.dp))
-            Text("Your Apps", color = Color.LightGray, style = MaterialTheme.typography.titleSmall, modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp))
+            Text(
+                "Your Apps",
+                color = Color.LightGray,
+                style = MaterialTheme.typography.titleSmall,
+                modifier = Modifier.padding(horizontal = 24.dp, vertical = 8.dp)
+            )
 
             LazyColumn {
                 items(apps) { app ->
@@ -144,11 +183,16 @@ fun MainScreen(viewModel: AppListViewModel = viewModel(factory = AppListViewMode
 fun PermissionStatusCard(state: PermissionState, onClick: () -> Unit) {
     val (color, icon, title, desc) = when (state) {
         PermissionState.Restricted -> Quad(
-            Color(0xFFFF5252), Icons.Default.Lock, "Setup Required", "Tap to unlock restricted settings"
+            Color(0xFFFF5252),
+            Icons.Default.Lock,
+            "Setup Required",
+            "Tap to unlock restricted settings"
         )
+
         PermissionState.Inactive -> Quad(
             Color(0xFFFFA000), Icons.Default.Warning, "Service Inactive", "Tap to enable Bawn"
         )
+
         PermissionState.Active -> Quad(
             Color(0xFF00FF9D), Icons.Default.CheckCircle, "Active", "Bawn is protecting your apps"
         )
@@ -168,11 +212,24 @@ fun PermissionStatusCard(state: PermissionState, onClick: () -> Unit) {
             modifier = Modifier.padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(imageVector = icon, contentDescription = null, tint = color, modifier = Modifier.size(32.dp))
+            Icon(
+                imageVector = icon,
+                contentDescription = null,
+                tint = color,
+                modifier = Modifier.size(32.dp)
+            )
             Spacer(modifier = Modifier.width(16.dp))
             Column {
-                Text(text = title, color = Color.White, style = MaterialTheme.typography.titleMedium)
-                Text(text = desc, color = Color.LightGray, style = MaterialTheme.typography.bodySmall)
+                Text(
+                    text = title,
+                    color = Color.White,
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = desc,
+                    color = Color.LightGray,
+                    style = MaterialTheme.typography.bodySmall
+                )
             }
         }
     }
@@ -194,7 +251,10 @@ fun RestrictedHelpDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
                 Spacer(modifier = Modifier.height(16.dp))
                 Text("1. Go to Accessibility > Installed Apps > Bawn.", color = Color.White)
                 Text("2. Try to turn it ON (You must see the block popup).", color = Color.White)
-                Text("3. Go to App Info > Click the 3 dots (top right) OR look under 'Permissions' menu.", color = Color.White)
+                Text(
+                    "3. Go to App Info > Click the 3 dots (top right) OR look under 'Permissions' menu.",
+                    color = Color.White
+                )
             }
         },
         confirmButton = {
@@ -209,12 +269,26 @@ fun RestrictedHelpDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
 @Composable
 fun AppListItem(app: AppUiModel, onToggle: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().clickable { onToggle() }.padding(16.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onToggle() }
+            .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Image(painter = rememberDrawablePainter(app.icon), contentDescription = null, modifier = Modifier.size(48.dp))
+        Image(
+            painter = rememberDrawablePainter(app.icon),
+            contentDescription = null,
+            modifier = Modifier.size(48.dp)
+        )
         Spacer(modifier = Modifier.width(16.dp))
         Text(app.name, color = Color.White, modifier = Modifier.weight(1f))
-        Switch(checked = app.isLocked, onCheckedChange = { onToggle() }, colors = SwitchDefaults.colors(checkedThumbColor = MaterialTheme.colorScheme.primary, checkedTrackColor = Color(0xFF005533)))
+        Switch(
+            checked = app.isLocked,
+            onCheckedChange = { onToggle() },
+            colors = SwitchDefaults.colors(
+                checkedThumbColor = MaterialTheme.colorScheme.primary,
+                checkedTrackColor = Color(0xFF005533)
+            )
+        )
     }
 }

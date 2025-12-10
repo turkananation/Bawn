@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="Theme.Bawn" parent="android:Theme.Material.Light.NoActionBar">
         <item name="android:statusBarColor">#1C1C1E</item>
         <item name="android:navigationBarColor">#1C1C1E</item>
