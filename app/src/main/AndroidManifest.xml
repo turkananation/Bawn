@@ -38,6 +38,11 @@
             android:taskAffinity=""
             android:theme="@style/Theme.Bawn.NoActionBar" />
 
+        <activity
+            android:name=".ui.SetPinActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Bawn" />
+
         <service
             android:name=".service.BawnAccessibilityService"
             android:exported="true"

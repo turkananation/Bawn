@@ -1,26 +1,21 @@
 package app.bawn.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContent
-import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.foundation.border
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.ui.draw.clip
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
-import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.animation.with
+import androidx.compose.animation.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -52,7 +47,12 @@ class SetPinActivity : ComponentActivity() {
             db.userSecurityDao().savePin(UserSecurityEntity(pinHash = hash))
 
             Toast.makeText(this@SetPinActivity, "Security PIN Set!", Toast.LENGTH_SHORT).show()
-            finish() // Return to the previous screen (likely Settings or Main)
+
+            // Relaunch MainActivity to ensure fresh state
+            val intent = Intent(this@SetPinActivity, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            startActivity(intent)
+            finish()
         }
     }
 }
@@ -72,24 +72,31 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
     // Helper to handle input logic
     fun handleInput(digit: String) {
         if (currentInput.length < 4) {
-            isError = false
-            currentInput += digit
+            // Reset error state on new input
+            if (isError) {
+                isError = false
+                currentInput = ""
+            }
 
-            if (currentInput.length == 4) {
+            val newInput = currentInput + digit
+            currentInput = newInput
+
+            if (newInput.length == 4) {
                 if (step == PinStep.Create) {
                     // Move to confirmation
-                    firstPin = currentInput
+                    firstPin = newInput
                     currentInput = ""
                     step = PinStep.Confirm
                 } else {
                     // Check confirmation
-                    if (currentInput == firstPin) {
+                    if (newInput == firstPin) {
                         onPinSet(firstPin)
                     } else {
-                        // Mismatch! Reset to start or just shake?
-                        // Let's reset to Confirm step for now
+                        // Mismatch! Reset EVERYTHING to start over
                         isError = true
                         currentInput = ""
+                        firstPin = ""
+                        step = PinStep.Create
                     }
                 }
             }
@@ -129,9 +136,15 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
                     )
                 )
                 Spacer(modifier = Modifier.height(8.dp))
+
+                val instruction = when {
+                    isError -> "PINs did not match. Try again."
+                    targetStep == PinStep.Create -> "Enter a 4-digit security code"
+                    else -> "Re-enter your code to verify"
+                }
+
                 Text(
-                    text = if (targetStep == PinStep.Create) "Enter a 4-digit security code"
-                    else "Re-enter your code to verify",
+                    text = instruction,
                     color = if (isError) Color(0xFFFF5252) else Color.LightGray,
                     fontSize = 14.sp
                 )
@@ -140,12 +153,11 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
 
         Spacer(modifier = Modifier.height(48.dp))
 
-        // Reuse your existing UI components for consistency
-        // Note: I'm reusing the visual style from LockScreenContent
         PinIndicatorRow(length = currentInput.length, isError = isError)
 
         Spacer(modifier = Modifier.height(64.dp))
 
+        // Reuse KeypadGrid from LockScreenContent.kt (Removed duplicate definition below)
         KeypadGrid(
             onDigitClick = { handleInput(it) },
             onDeleteClick = { handleDelete() }
@@ -153,8 +165,7 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
     }
 }
 
-// Reusing these small components locally to ensure this file is self-contained
-// (or you can import them if you made them public in LockScreenContent.kt)
+// Keep this helper private since it's unique to this screen
 @Composable
 private fun PinIndicatorRow(length: Int, isError: Boolean) {
     Row(horizontalArrangement = Arrangement.spacedBy(24.dp)) {
@@ -168,7 +179,7 @@ private fun PinIndicatorRow(length: Int, isError: Boolean) {
                         if (isFilled) MaterialTheme.colorScheme.primary
                         else MaterialTheme.colorScheme.surface
                     )
-                    .border( 
+                    .border(
                         width = 1.dp,
                         color = if (isError) Color.Red else Color.Transparent,
                         shape = CircleShape

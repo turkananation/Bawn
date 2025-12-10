@@ -26,7 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
                 )
                     // 3. Since we are in dev, we can destroy old data to rebuild schema.
                     // In production, you would write a migration.
-                    .fallbackToDestructiveMigration(false)
+                    .fallbackToDestructiveMigration(true)
                     .build()
                 INSTANCE = instance
                 instance

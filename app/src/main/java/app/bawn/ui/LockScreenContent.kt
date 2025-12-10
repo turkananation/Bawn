@@ -24,6 +24,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,32 +34,51 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
-fun LockScreenContent(onUnlockSuccess: () -> Unit) {
+fun LockScreenContent(
+    // We pass a suspending function that returns true (success) or false (fail)
+    onVerifyPin: suspend (String) -> Boolean
+) {
     // State for the PIN input
     var pinInput by remember { mutableStateOf("") }
     var isError by remember { mutableStateOf(false) }
 
-    // HARDCODED PIN FOR DEMO (Replace with real logic later)
-    val correctPin = "1234"
+    // Coroutine scope to run the verification logic
+    val scope = rememberCoroutineScope()
 
-    // Error shake animation trigger (simple scale effect for now)
-    val scale by animateFloatAsState(if (isError) 1.1f else 1f, label = "shake")
+    // Error shake animation trigger (scales up slightly on error)
+    val scale by animateFloatAsState(if (isError) 1.2f else 1f, label = "shake")
 
     // Function to handle key presses
     fun onDigitClick(digit: String) {
         if (pinInput.length < 4) {
-            isError = false
-            pinInput += digit
+            // Reset error state when typing
+            if (isError) {
+                isError = false
+                pinInput = ""
+            }
+
+            val newInput = pinInput + digit
+            pinInput = newInput
 
             // Auto-check when 4 digits are entered
-            if (pinInput.length == 4) {
-                if (pinInput == correctPin) {
-                    onUnlockSuccess()
-                } else {
-                    isError = true
-                    pinInput = "" // Clear on error
+            if (newInput.length == 4) {
+                scope.launch {
+                    // 1. Verify against DB (this suspends)
+                    val isCorrect = onVerifyPin(newInput)
+
+                    if (!isCorrect) {
+                        // 2. Handle Failure
+                        isError = true
+                        pinInput = "" // Clear input
+                        // Optional: Reset error state after animation
+                        delay(500)
+                        isError = false
+                    }
+                    // 3. Handle Success: The Activity will call finish(), so we do nothing here
                 }
             }
         }
@@ -83,7 +103,7 @@ fun LockScreenContent(onUnlockSuccess: () -> Unit) {
         Icon(
             imageVector = Icons.Default.Lock,
             contentDescription = null,
-            tint = MaterialTheme.colorScheme.primary,
+            tint = if (isError) Color.Red else MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .size(64.dp)
                 .scale(scale)
@@ -153,10 +173,7 @@ fun KeypadButton(key: String, onDigitClick: (String) -> Unit, onDeleteClick: () 
             .clip(CircleShape)
             .clickable(enabled = key.isNotEmpty()) {
                 if (key == "DEL") onDeleteClick() else onDigitClick(key)
-            }
-        // Optional: Add background for buttons if desired
-        // .background(MaterialTheme.colorScheme.surface)
-        ,
+            },
         contentAlignment = Alignment.Center
     ) {
         if (key == "DEL") {
