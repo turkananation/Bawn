@@ -5,9 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [LockedAppEntity::class], version = 1, exportSchema = false)
+// 1. Add UserSecurityEntity to entities list
+// 2. Bump version from 1 to 2
+@Database(entities = [LockedAppEntity::class, UserSecurityEntity::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+
     abstract fun lockedAppDao(): LockedAppDao
+    abstract fun userSecurityDao(): UserSecurityDao // <-- Add this
 
     companion object {
         @Volatile
@@ -19,7 +23,11 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "bawn_database"
-                ).build()
+                )
+                    // 3. Since we are in dev, we can destroy old data to rebuild schema.
+                    // In production, you would write a migration.
+                    .fallbackToDestructiveMigration(false)
+                    .build()
                 INSTANCE = instance
                 instance
             }
