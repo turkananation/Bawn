@@ -1,6 +1,6 @@
 # 🛡️ Bawn - The Digital Fortress
 
-**Bawn** is a high-performance, minimalist App Locker for Android, built with modern security protocols and Jetpack Compose. It serves as a secure overlay "fortress," intercepting unauthorized access to your selected applications with biometric or PIN verification.
+**Bawn** is a high-performance, privacy fortress for Android, built with modern security protocols and Jetpack Compose. It serves as a secure overlay "fortress," intercepting unauthorized access to your selected applications with biometric or PIN verification.
 
 > *"Bawn" (noun): A defensive wall or fortified enclosure.*
 
