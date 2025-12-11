@@ -31,7 +31,7 @@ All contributions must be done in a dedicated branch. We categorize branches by 
 We use strict naming conventions to link code changes directly to our **Engineering Roadmap** and **Issue Tracker**.
 
 ### 1. Feature Branches
-Use the **Feature ID** from the [Engineering Roadmap](README.md#tactical-roadmap) or the GitHub Issue number.
+Use the **Feature ID** from the [Engineering Roadmap](ENGINEERING_ROADMAP.md) or the GitHub Issue number.
 * **Syntax:** `feature/<ID>-<short-description>`
 * **Examples:**
     * `feature/12-uninstall-protection` (Implements Roadmap Item #12)
