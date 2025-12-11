@@ -1,242 +1,153 @@
-# 🛠️ Master Engineering Roadmap & Feasibility Report
+# 🏯 Bawn: Command Center & Engineering Mainframe
 
-**Scope:** Full Feature Set Analysis  
-**Calibration:** Complexity (Low → Extreme) vs. Priority (P0 → P4)
+**Operational Status:** 🟡 Active Development
+**Security Protocol:** Zero Latency
+**Theme System:** Neon Fortress
 
----
-
-## 🟢 Tier 1: The "Quick Wins" (Low Complexity)
-*Features that rely on existing architectures (Room/Compose) or simple Android APIs. These are high-ROI tasks for filling out the app.*
-
-### 1. Batch Operations (Lock/Unlock All)
-* **Priority:** P1
-* **Effort:** 1 Day
-* **Tech:** SQL query update in `LockedAppDao`. Simple UI toggle in `MainActivity`.
-
-### 2. Dark/Light Mode Toggle
-* **Priority:** P1
-* **Effort:** 2 Days
-* **Tech:** Jetpack Compose `LocalTheme` provider switching.
-
-### 3. Quick Actions (Notification Shade)
-* **Priority:** P2
-* **Effort:** 2 Days
-* **Tech:** Add a `TileService` to Quick Settings tiles for one-tap "Lock All" or "Pause Protection".
-
-### 4. Fake Crash Screen
-* **Priority:** P2
-* **Effort:** 2-3 Days
-* **Tech:** A dedicated Dialog in `LockScreenActivity` that intercepts touches. Triple-tap gesture to dismiss.
-
-### 5. Custom Themes
-* **Priority:** P2
-* **Effort:** 3 Days
-* **Tech:** Define `ColorPalette` objects in Compose and store user preference in DataStore.
-
-### 6. Usage Statistics
-* **Priority:** P3
-* **Effort:** 3 Days
-* **Tech:** Add a `usage_logs` table to Room. Log events in `BawnAccessibilityService`. Visualize with a simple Compose chart.
-
-### 7. Lock Screen Customization
-* **Priority:** P3
-* **Effort:** 3 Days
-* **Tech:** Allow users to upload a background image (store URI) and change text colors in `LockScreenContent`.
-
-### 8. Shake to Lock
-* **Priority:** P3
-* **Effort:** 2 Days
-* **Tech:** `SensorEventListener` (Accelerometer) in a foreground service. Detect g-force threshold.
-
-### 9. Panic Button
-* **Priority:** P3
-* **Effort:** 1 Day
-* **Tech:** A floating widget or Quick Tile that instantly calls `lockAll()` and `clearSession()`.
-
-### 10. Recommended Apps
-* **Priority:** P4
-* **Effort:** 1 Day
-* **Tech:** Hardcoded list of package names (e.g., Banking, Social) to highlight in the `AppListViewModel`.
-
-### 11. Widget Support
-* **Priority:** P4
-* **Effort:** 3-4 Days
-* **Tech:** Glance (Jetpack Compose for Widgets) to build a home screen toggle.
+> **⚠️ AUTHORIZED PERSONNEL ONLY**
+> This dashboard tracks the construction of the Bawn defense system. All contributors must adhere to the **Standard Operating Procedures (SOP)** listed below before deploying code.
 
 ---
 
-## 🟡 Tier 2: Core Security & Logic (Medium Complexity)
-*Features requiring new Android components (Receivers, Camera, Device Admin) but are well-documented.*
-
-### 12. Uninstall Protection
-* **Priority:** P0 (Critical)
-* **Effort:** 3-5 Days
-* **Tech:** `DeviceAdminReceiver`. Prevents the app from being uninstalled unless Admin is revoked (which we protect).
-
-### 13. Pattern Lock
-* **Priority:** P1
-* **Effort:** 5-7 Days
-* **Tech:** Custom Compose Canvas to draw nodes and paths. Logic to hash the node sequence string.
-
-### 14. Intruder Selfie
-* **Priority:** P1
-* **Effort:** 5-7 Days
-* **Tech:** `CameraX` library. Hidden `ImageCapture` use case on the lock screen. Permission handling is key.
-
-### 15. Break-in Alerts
-* **Priority:** P2
-* **Effort:** 3-4 Days
-* **Tech:** Logic hook in `LockScreenActivity` failure state. Send local notification or email via SMTP library.
-
-### 16. App Groups (Profiles)
-* **Priority:** P2
-* **Effort:** 4 Days
-* **Tech:** Database relation (One-to-Many). "Work Profile" locks apps A, B, C. "Home Profile" locks X, Y, Z.
-
-### 17. Time-based Locking
-* **Priority:** P2
-* **Effort:** 5 Days
-* **Tech:** `WorkManager` to schedule state changes. Needs exact alarm permissions for reliability.
-
-### 18. Auto-lock on USB Debug
-* **Priority:** P2
-* **Effort:** 2 Days
-* **Tech:** Listen for `Settings.Global.ADB_ENABLED` changes via `ContentObserver`.
-
-### 19. Guest Mode
-* **Priority:** P3
-* **Effort:** 4 Days
-* **Tech:** A temporary "Session" state that overrides the main database locks with a restrictive set.
-
-### 20. Fingerprint Limit
-* **Priority:** P3
-* **Effort:** 3 Days
-* **Tech:** Difficult API. We can't see whose fingerprint it is, only that it changed. We can invalidate keys on new enrollments via `KeyGenParameterSpec.Builder.setInvalidatedByBiometricEnrollment(true)`.
-
-### 21. Screenshot Detection
-* **Priority:** P3
-* **Effort:** 3 Days
-* **Tech:** `WindowManager.FLAG_SECURE` prevents it mostly. For detection, we need a `FileObserver` on the Screenshots folder (unreliable on Android 14+ due to scoped storage).
-
-### 22. Child Lock Profile
-* **Priority:** P3
-* **Effort:** 4 Days
-* **Tech:** Similar to Guest Mode but with a timer (Time-based locking logic).
+## 📡 Mission Parameters
+* **Objective:** Build the world's fastest "Digital Fortress" for Android.
+* **Target SDK:** Android 16 (API 36) | **Min SDK:** Android 8.0 (API 26)
+* **Core Philosophy:** Active Defense. We don't just lock apps; we aggressively block intruders.
 
 ---
 
-## 🟠 Tier 3: Advanced Architecture (High Complexity)
-*Features that fight against Android system limitations or require complex background services.*
+## 🔐 Standard Operating Procedures (SOP)
+*Strict engineering protocols derived from the Product Specification.*
 
-### 23. Decoy Mode
-* **Priority:** P2
-* **Effort:** 6-8 Days
-* **Tech:** Advanced `WindowManager` overlay. We draw a fake "Crash" or "No Internet" layout over the app, intercept touches, and only unlock on a specific gesture.
+### 1. Visual Protocol: "The Neon Fortress"
+All UI components must adhere to the high-contrast aesthetic.
+* **Colors:** Use `LocalNeonColors` in `Theme.kt`.
+    * `Gold (0xFFFFD700)`: Primary Accents
+    * `Green (0xFF00FF9D)`: Safe/Active States
+    * `Red (0xFFFF3333)`: Alerts/Restricted States
+* **Components:** All cards must use a `BorderStroke` to simulate a "glowing edge".
+* **Motion:** Use `Crossfade` for tab switching. **No sliding animations** (maintain stability).
 
-### 24. Local Backup & Restore
-* **Priority:** P2
-* **Effort:** 5-7 Days
-* **Tech:** Export Room DB to JSON/ProtoBuf. Use Storage Access Framework (SAF) to save to user storage. Must encrypt the export file so PIN hashes aren't exposed.
-
-### 25. Stealth Mode (Hide App Icon)
-* **Priority:** P3
-* **Effort:** 3 Days (High Risk)
-* **Tech:** Disable the main Activity component via `PackageManager`. Launch via a specific dialer code (`BroadcastReceiver` on `NEW_OUTGOING_CALL` - Note: Google Play restricts this permission heavily).
-
-### 26. Notification Privacy
-* **Priority:** P3
-* **Effort:** 7-10 Days
-* **Tech:** `NotificationListenerService`. Intercept notifications from locked apps and "cancel" or "modify" them. High risk of being killed by OEM battery savers.
-
-### 27. Two-Factor Lock
-* **Priority:** P3
-* **Effort:** 5 Days
-* **Tech:** Logic flow: Biometric Success -> Trigger PIN Screen. Needs careful state management to avoid loops.
-
-### 28. Tasker Integration
-* **Priority:** P4
-* **Effort:** 5 Days
-* **Tech:** Expose a `BroadcastReceiver`/Intent API for external apps to trigger locks.
-
-### 29. Duress PIN
-* **Priority:** P4
-* **Effort:** 3 Days
-* **Tech:** A secondary hash in the DB. If entered, unlock the app but secretly wipe data or send a silent alert.
-
-### 30. Honeypot Apps
-* **Priority:** P4
-* **Effort:** 7 Days
-* **Tech:** Create fake app icons (Aliases) that open a dummy activity which logs every interaction.
-
-### 31. Location-based Unlocking
-* **Priority:** P4
-* **Effort:** 8-10 Days
-* **Tech:** Geofencing API. Requires `ACCESS_BACKGROUND_LOCATION` (Hard to get Play Store approval). High battery drain.
-
-### 32. Geofencing Alerts
-* **Priority:** P4
-* **Effort:** 8-10 Days
-* **Tech:** (Same as above)
+### 2. Security Critical Path
+* **Re-Authentication:** Accessing *Tab 3 (Security Lab)* or *Tab 4 (Settings)* **MUST** trigger a biometric/PIN re-check if the session is > 5 minutes old.
+* **Data Safety:** Destructive actions (e.g., turning off Uninstall Protection) require the Master PIN.
 
 ---
 
-## 🔴 Tier 4: The "Moonshots" (Extreme Complexity / Backend)
-*Features requiring a dedicated backend team, cloud infrastructure, or R&D.*
+## 🗺️ Tactical Roadmap
 
-### 33. Cloud Sync
-* **Priority:** P2
-* **Effort:** 1 Month+
-* **Tech:** Firebase/AWS, User Auth, Encrypted Cloud Storage. Shifts app from "Offline" to "Online" (Privacy Policy overhaul).
+### 🟢 Phase 1: Perimeter Defenses (Quick Wins)
+*Status: Active Construction*
 
-### 34. Remote Lock
-* **Priority:** P3
-* **Effort:** 2-3 Weeks
-* **Tech:** FCM (Firebase Cloud Messaging) to send push triggers to the device.
+- [ ] **1. Batch Operations (Lock/Unlock All)** `P1` `1 Day`
+  > **Tech Brief:** SQL query update in `LockedAppDao`. Simple UI toggle in `MainActivity`.
 
-### 35. Wear OS Support
-* **Priority:** P4
-* **Effort:** 2 Weeks
-* **Tech:** A separate Wear OS app module. Communication via DataLayer API to unlock phone apps from watch.
+- [ ] **2. Dark/Light Mode Toggle** `P1` `2 Days`
+  > **Tech Brief:** Jetpack Compose `LocalTheme` provider switching.
 
-### 36. Family Sharing
-* **Priority:** P4
-* **Effort:** 1 Month+
-* **Tech:** Complex backend user management (Parent/Child accounts).
+- [ ] **3. Quick Actions (Notification Shade)** `P2` `2 Days`
+  > **Tech Brief:** `TileService` for Quick Settings tiles (e.g., "Pause Protection").
 
-### 37. Enterprise Mode (MDM)
-* **Priority:** P4
-* **Effort:** 2 Months+
-* **Tech:** Android Enterprise API integration.
+- [ ] **4. Fake Crash Screen** `P2` `2-3 Days`
+  > **Tech Brief:** Dedicated Dialog in `LockScreenActivity` intercepting touches. Triple-tap to dismiss.
 
-### 38. AI-Powered Locking
-* **Priority:** P4
-* **Effort:** R&D
-* **Tech:** On-device ML (TFLite) to learn patterns. Overkill for this project.
+- [ ] **5. Custom Themes** `P2` `3 Days`
+  > **Tech Brief:** `ColorPalette` objects in Compose stored in DataStore.
 
-### 39. Context-Aware Security
-* **Priority:** P4
-* **Effort:** R&D
-* **Tech:** Heuristics engine combining time, location, and network state.
+- [ ] **6. Usage Statistics** `P3` `3 Days`
+  > **Tech Brief:** `usage_logs` table in Room. Log events in `BawnAccessibilityService`.
 
-### 40. Behavioral Analysis
-* **Priority:** P4
-* **Effort:** R&D
-* **Tech:** Analyzing touch pressure/velocity to detect unauthorized users (Biometric behavior).
+- [ ] **7. Lock Screen Customization** `P3` `3 Days`
+  > **Tech Brief:** User-uploaded background images (URI storage) and dynamic text colors.
 
-### 41. Voice Command Support
-* **Priority:** P4
-* **Effort:** 1 Week
-* **Tech:** Google Assistant App Actions (`actions.xml`).
+- [ ] **8. Shake to Lock** `P3` `2 Days`
+  > **Tech Brief:** `SensorEventListener` (Accelerometer) in a foreground service.
+
+- [ ] **9. Panic Button** `P3` `1 Day`
+  > **Tech Brief:** Floating widget or Quick Tile that calls `lockAll()` and `clearSession()`.
+
+- [ ] **10. Recommended Apps** `P4` `1 Day`
+  > **Tech Brief:** Hardcoded list (Banking, Social) highlighted in `AppListViewModel`.
+
+- [ ] **11. Widget Support** `P4` `3-4 Days`
+  > **Tech Brief:** Glance (Jetpack Compose for Widgets) for Home Screen control.
+
+
+### 🟡 Phase 2: Core Security Protocols
+*Status: Planning / High Priority*
+
+- [ ] **12. Uninstall Protection** `P0` `CRITICAL` `3-5 Days`
+  > **Tech Brief:** `DeviceAdminReceiver`. Prevent app removal by unauthorized users.
+
+- [ ] **13. Pattern Lock** `P1` `5-7 Days`
+  > **Tech Brief:** Custom Compose Canvas for nodes/paths. Hashing node sequences.
+
+- [ ] **14. Intruder Selfie** `P1` `5-7 Days`
+  > **Tech Brief:** `CameraX` hidden `ImageCapture` on failed attempts.
+
+- [ ] **15. Break-in Alerts** `P2` `3-4 Days`
+  > **Tech Brief:** Logic hook in failure state. Local notification or SMTP email.
+
+- [ ] **16. App Groups (Profiles)** `P2` `4 Days`
+  > **Tech Brief:** DB relations (One-to-Many). "Work Profile" vs "Home Profile".
+
+- [ ] **17. Time-based Locking** `P2` `5 Days`
+  > **Tech Brief:** `WorkManager` scheduling. Requires exact alarm permissions.
+
+- [ ] **18. Auto-lock on USB Debug** `P2` `2 Days`
+  > **Tech Brief:** Listen for `Settings.Global.ADB_ENABLED` via `ContentObserver`.
+
+- [ ] **19. Guest Mode** `P3` `4 Days`
+  > **Tech Brief:** Temporary "Session" state overriding main database locks.
+
+- [ ] **20. Fingerprint Limit** `P3` `3 Days`
+  > **Tech Brief:** Invalidate keys on new enrollments via `KeyGenParameterSpec`.
+
+- [ ] **21. Screenshot Detection** `P3` `3 Days`
+  > **Tech Brief:** `FLAG_SECURE` (Prevention) + `FileObserver` (Detection backup).
+
+- [ ] **22. Child Lock Profile** `P3` `4 Days`
+  > **Tech Brief:** Timer-based locking logic similar to Guest Mode.
+
+
+### 🟠 Phase 3: Heavy Armor (Advanced)
+*Status: Backlog*
+
+- [ ] **23. Decoy Mode** `P2`
+- [ ] **24. Local Backup & Restore** `P2`
+- [ ] **25. Stealth Mode** `P3`
+- [ ] **26. Notification Privacy** `P3`
+- [ ] **27. Two-Factor Lock** `P3`
+- [ ] **28. Tasker Integration** `P4`
+- [ ] **29. Duress PIN** `P4`
+- [ ] **30. Honeypot Apps** `P4`
+- [ ] **31. Location-based Unlocking** `P4`
+- [ ] **32. Geofencing Alerts** `P4`
+
+### 🔴 Phase 4: Moonshot R&D
+*Status: Classified / Experimental*
+
+- [ ] **33. Cloud Sync** `P2`
+- [ ] **34. Remote Lock** `P3`
+- [ ] **35. Wear OS Support** `P4`
+- [ ] **36. Family Sharing** `P4`
+- [ ] **37. Enterprise Mode (MDM)** `P4`
+- [ ] **38. AI-Powered Locking** `P4`
+- [ ] **39. Context-Aware Security** `P4`
+- [ ] **40. Behavioral Analysis** `P4`
+- [ ] **41. Voice Command Support** `P4`
 
 ---
 
-## 👷 Senior Engineer's Verdict
+## 🧬 Legend & Taxonomy
 
-**Phase 1 (This Sprint):**
-Complete Tier 1 items (UI polish) + Uninstall Protection (Tier 2, P0). The app needs to feel finished and be secure against simple deletion.
+| Rank | Definition |
+| :--- | :--- |
+| `P0` | **Critical:** Blockers. The fortress is vulnerable without this. |
+| `P1` | **High:** Core functionality. Required for v1.0 Release. |
+| `P2` | **Medium:** Essential upgrades. Scheduled for v1.1+. |
+| `P3` | **Low:** Tactical advantages. Nice to have. |
+| `P4` | **Experimental:** R&D projects. |
 
-**Phase 2 (Next Month):**
-Focus on Pattern Lock and Intruder Selfie. These are the most marketable features users look for in an App Locker.
-
-**Phase 3 (Long Term):**
-Tackle Decoy Mode and Local Backup. Avoid Tier 4 (Cloud/Backend) unless we pivot to a subscription model to pay for servers.
+---
+> **System Log:** Last updated by High Command.
