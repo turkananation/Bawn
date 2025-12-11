@@ -60,7 +60,7 @@ Use the Issue number if available.
     git pull origin develop
     git checkout -b feature/12-uninstall-protection
     ```
-3.  **Code:** Implement your changes. adhere to the **Visual Protocol** and **Security Critical Path** defined in the README.
+3.  **Code:** Implement your changes. adhere to the **Visual Protocol** and **Security Critical Path** defined in the `ENGINEERING_ROADMAP.md`.
 4.  **Test:** Ensure the app builds and all unit tests pass.
 5.  **Commit:** Use descriptive, imperative commit messages.
     * ✅ *Good:* "Add DeviceAdminReceiver for uninstall protection"
