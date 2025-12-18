@@ -3,20 +3,16 @@ package app.bawn.ui
 import android.content.Intent
 import android.os.Bundle
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.biometric.BiometricPrompt
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
 import app.bawn.BawnApplication
-import app.bawn.data.AppDatabase
 import app.bawn.service.SessionManager
 import app.bawn.ui.theme.BawnTheme
 import app.bawn.util.SecurityUtils
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class LockScreenActivity : FragmentActivity() {
@@ -95,7 +91,8 @@ class LockScreenActivity : FragmentActivity() {
 
     private fun authenticateWithBiometrics() {
         val executor = ContextCompat.getMainExecutor(this)
-        val biometricPrompt = BiometricPrompt(this, executor,
+        val biometricPrompt = BiometricPrompt(
+            this, executor,
             object : BiometricPrompt.AuthenticationCallback() {
                 override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                     super.onAuthenticationSucceeded(result)
@@ -109,6 +106,9 @@ class LockScreenActivity : FragmentActivity() {
             .setNegativeButtonText("Use PIN")
             .build()
 
-        try { biometricPrompt.authenticate(promptInfo) } catch (_: Exception) {}
+        try {
+            biometricPrompt.authenticate(promptInfo)
+        } catch (_: Exception) {
+        }
     }
 }

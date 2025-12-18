@@ -108,7 +108,8 @@ class AppListViewModel(application: Application) : AndroidViewModel(application)
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                val app = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as BawnApplication)
+                val app =
+                    (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as BawnApplication)
                 AppListViewModel(app)
             }
         }

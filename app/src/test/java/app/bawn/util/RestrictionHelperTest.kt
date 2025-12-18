@@ -7,7 +7,10 @@ import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Process
-import io.mockk.*
+import io.mockk.every
+import io.mockk.mockk
+import io.mockk.mockkStatic
+import io.mockk.unmockkAll
 import org.junit.After
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
@@ -64,7 +67,11 @@ class RestrictionHelperTest {
     @Test
     fun `TiramisuHelper returns FALSE when User has ALREADY allowed settings`() {
         every {
-            appOpsManager.checkOpNoThrow("android:access_restricted_settings", testUid, testPackageName)
+            appOpsManager.checkOpNoThrow(
+                "android:access_restricted_settings",
+                testUid,
+                testPackageName
+            )
         } returns AppOpsManager.MODE_ALLOWED
 
         val result = RestrictionHelper.TiramisuHelper.checkRestrictions(context)
@@ -169,7 +176,11 @@ class RestrictionHelperTest {
 
     private fun setupRestrictedSettingsNotAllowed() {
         every {
-            appOpsManager.checkOpNoThrow("android:access_restricted_settings", testUid, testPackageName)
+            appOpsManager.checkOpNoThrow(
+                "android:access_restricted_settings",
+                testUid,
+                testPackageName
+            )
         } returns AppOpsManager.MODE_DEFAULT
     }
 }

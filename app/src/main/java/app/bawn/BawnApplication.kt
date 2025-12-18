@@ -20,6 +20,7 @@ class BawnApplication : Application(), Application.ActivityLifecycleCallbacks {
     // Lock Logic State
     private var backgroundTime: Long = 0
     private var isUnlockPending = false
+
     // 30 seconds grace period (adjust as needed)
     private val GRACE_PERIOD_MS = 30000L
 

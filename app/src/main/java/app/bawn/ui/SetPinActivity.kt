@@ -5,14 +5,32 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.*
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -123,8 +141,8 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
         AnimatedContent(
             targetState = step,
             transitionSpec = {
-                slideInHorizontally { width -> width } + fadeIn() with
-                        slideOutHorizontally { width -> -width } + fadeOut()
+                (slideInHorizontally { width -> width } + fadeIn()).togetherWith(
+                    exit = slideOutHorizontally { width -> -width } + fadeOut())
             }, label = "header_anim"
         ) { targetStep ->
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -151,15 +169,15 @@ fun SetPinScreen(onPinSet: (String) -> Unit) {
             }
         }
 
-        Spacer(modifier = Modifier.height(48.dp))
+        Spacer(modifier = Modifier.height(height = 48.dp))
 
         PinIndicatorRow(length = currentInput.length, isError = isError)
 
-        Spacer(modifier = Modifier.height(64.dp))
+        Spacer(modifier = Modifier.height(height = 64.dp))
 
         // Reuse KeypadGrid from LockScreenContent.kt (Removed duplicate definition below)
         KeypadGrid(
-            onDigitClick = { handleInput(it) },
+            onDigitClick = { handleInput(digit = it) },
             onDeleteClick = { handleDelete() }
         )
     }

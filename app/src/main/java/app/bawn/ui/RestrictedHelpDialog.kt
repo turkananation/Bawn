@@ -17,7 +17,6 @@ import androidx.compose.foundation.text.InlineTextContent
 import androidx.compose.foundation.text.appendInlineContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.WarningAmber
 import androidx.compose.material3.AlertDialog
@@ -94,7 +93,12 @@ fun RestrictedHelpDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
                             number = 1,
                             text = buildAnnotatedString {
                                 append("Tap the ")
-                                withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = MaterialTheme.colorScheme.primary)) {
+                                withStyle(
+                                    SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        color = MaterialTheme.colorScheme.primary
+                                    )
+                                ) {
                                     append("Open App Info")
                                 }
                                 append(" button below.")
@@ -129,7 +133,12 @@ fun RestrictedHelpDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
                             number = 3,
                             text = buildAnnotatedString {
                                 append("Select ")
-                                withStyle(SpanStyle(fontWeight = FontWeight.Bold, color = Color.White)) {
+                                withStyle(
+                                    SpanStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        color = Color.White
+                                    )
+                                ) {
                                     append("Allow restricted settings")
                                 }
                                 append(".")
@@ -151,7 +160,11 @@ fun RestrictedHelpDialog(onDismiss: () -> Unit, onGoToSettings: () -> Unit) {
             ) {
                 Text("Open App Info", fontWeight = FontWeight.Bold)
                 Spacer(Modifier.width(8.dp))
-                Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = null, modifier = Modifier.size(16.dp))
+                Icon(
+                    Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
             }
         },
         dismissButton = {

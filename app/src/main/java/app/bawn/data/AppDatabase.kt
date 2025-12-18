@@ -7,7 +7,11 @@ import androidx.room.RoomDatabase
 
 // 1. Add UserSecurityEntity to entities list
 // 2. Bump version from 1 to 2
-@Database(entities = [LockedAppEntity::class, UserSecurityEntity::class], version = 2, exportSchema = false)
+@Database(
+    entities = [LockedAppEntity::class, UserSecurityEntity::class],
+    version = 2,
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun lockedAppDao(): LockedAppDao

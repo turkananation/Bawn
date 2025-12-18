@@ -5,11 +5,13 @@
 **Theme System:** Neon Fortress
 
 > **⚠️ AUTHORIZED PERSONNEL ONLY**
-> This dashboard tracks the construction of the Bawn defense system. All contributors must adhere to the **Standard Operating Procedures (SOP)** listed below before deploying code.
+> This dashboard tracks the construction of the Bawn defense system. All contributors must adhere to
+> the **Standard Operating Procedures (SOP)** listed below before deploying code.
 
 ---
 
 ## 📡 Mission Parameters
+
 * **Objective:** Build the world's fastest "Digital Fortress" for Android.
 * **Target SDK:** Android 16 (API 36) | **Min SDK:** Android 8.0 (API 26)
 * **Core Philosophy:** Active Defense. We don't just lock apps; we aggressively block intruders.
@@ -17,10 +19,13 @@
 ---
 
 ## 🔐 Standard Operating Procedures (SOP)
+
 *Strict engineering protocols derived from the Product Specification.*
 
 ### 1. Visual Protocol: "The Neon Fortress"
+
 All UI components must adhere to the high-contrast aesthetic.
+
 * **Colors:** Use `LocalNeonColors` in `Theme.kt`.
     * `Gold (0xFFFFD700)`: Primary Accents
     * `Green (0xFF00FF9D)`: Safe/Active States
@@ -29,14 +34,18 @@ All UI components must adhere to the high-contrast aesthetic.
 * **Motion:** Use `Crossfade` for tab switching. **No sliding animations** (maintain stability).
 
 ### 2. Security Critical Path
-* **Re-Authentication:** Accessing *Tab 3 (Security Lab)* or *Tab 4 (Settings)* **MUST** trigger a biometric/PIN re-check if the session is > 5 minutes old.
-* **Data Safety:** Destructive actions (e.g., turning off Uninstall Protection) require the Master PIN.
+
+* **Re-Authentication:** Accessing *Tab 3 (Security Lab)* or *Tab 4 (Settings)* **MUST** trigger a
+  biometric/PIN re-check if the session is > 5 minutes old.
+* **Data Safety:** Destructive actions (e.g., turning off Uninstall Protection) require the Master
+  PIN.
 
 ---
 
 ## 🗺️ Tactical Roadmap
 
 ### 🟢 Phase 1: Perimeter Defenses (Quick Wins)
+
 *Status: Active Construction*
 
 - [ ] **1. Batch Operations (Lock/Unlock All)** `P1` `1 Day`
@@ -49,7 +58,8 @@ All UI components must adhere to the high-contrast aesthetic.
   > **Tech Brief:** `TileService` for Quick Settings tiles (e.g., "Pause Protection").
 
 - [ ] **4. Fake Crash Screen** `P2` `2-3 Days`
-  > **Tech Brief:** Dedicated Dialog in `LockScreenActivity` intercepting touches. Triple-tap to dismiss.
+  > **Tech Brief:** Dedicated Dialog in `LockScreenActivity` intercepting touches. Triple-tap to
+  dismiss.
 
 - [ ] **5. Custom Themes** `P2` `3 Days`
   > **Tech Brief:** `ColorPalette` objects in Compose stored in DataStore.
@@ -72,8 +82,8 @@ All UI components must adhere to the high-contrast aesthetic.
 - [ ] **11. Widget Support** `P4` `3-4 Days`
   > **Tech Brief:** Glance (Jetpack Compose for Widgets) for Home Screen control.
 
-
 ### 🟡 Phase 2: Core Security Protocols
+
 *Status: Planning / High Priority*
 
 - [ ] **12. Uninstall Protection** `P0` `CRITICAL` `3-5 Days`
@@ -109,8 +119,8 @@ All UI components must adhere to the high-contrast aesthetic.
 - [ ] **22. Child Lock Profile** `P3` `4 Days`
   > **Tech Brief:** Timer-based locking logic similar to Guest Mode.
 
-
 ### 🟠 Phase 3: Heavy Armor (Advanced)
+
 *Status: Backlog*
 
 - [ ] **23. Decoy Mode** `P2`
@@ -125,6 +135,7 @@ All UI components must adhere to the high-contrast aesthetic.
 - [ ] **32. Geofencing Alerts** `P4`
 
 ### 🔴 Phase 4: Moonshot R&D
+
 *Status: Classified / Experimental*
 
 - [ ] **33. Cloud Sync** `P2`
@@ -141,13 +152,13 @@ All UI components must adhere to the high-contrast aesthetic.
 
 ## 🧬 Legend & Taxonomy
 
-| Rank | Definition |
-| :--- | :--- |
+| Rank | Definition                                                       |
+|:-----|:-----------------------------------------------------------------|
 | `P0` | **Critical:** Blockers. The fortress is vulnerable without this. |
-| `P1` | **High:** Core functionality. Required for v1.0 Release. |
-| `P2` | **Medium:** Essential upgrades. Scheduled for v1.1+. |
-| `P3` | **Low:** Tactical advantages. Nice to have. |
-| `P4` | **Experimental:** R&D projects. |
+| `P1` | **High:** Core functionality. Required for v1.0 Release.         |
+| `P2` | **Medium:** Essential upgrades. Scheduled for v1.1+.             |
+| `P3` | **Low:** Tactical advantages. Nice to have.                      |
+| `P4` | **Experimental:** R&D projects.                                  |
 
 ---
 > **System Log:** Last updated by High Command.

@@ -5,9 +5,9 @@ import android.content.Context
 import android.content.pm.PackageInstaller
 import android.os.Build
 import android.os.Process
+import android.view.accessibility.AccessibilityManager
 import androidx.annotation.RequiresApi
 import app.bawn.service.BawnAccessibilityService
-import android.view.accessibility.AccessibilityManager
 
 object RestrictionHelper {
 
@@ -24,7 +24,8 @@ object RestrictionHelper {
 
     fun isServiceEnabled(context: Context): Boolean {
         val am = context.getSystemService(Context.ACCESSIBILITY_SERVICE) as AccessibilityManager
-        val enabledServices = am.getEnabledAccessibilityServiceList(android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
+        val enabledServices =
+            am.getEnabledAccessibilityServiceList(android.accessibilityservice.AccessibilityServiceInfo.FEEDBACK_ALL_MASK)
 
         return enabledServices.any {
             it.resolveInfo.serviceInfo.packageName == context.packageName &&
